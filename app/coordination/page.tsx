@@ -1,0 +1,11 @@
+'use client'
+
+import { FormEvent, useState } from 'react'
+import { CheckCircle2, Radio, Send } from 'lucide-react'
+import { DataTable, OperationsPage, SectionCard } from '@/components/operations-page'
+
+export default function Page() {
+  const [started, setStarted] = useState(false)
+  function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setStarted(true) }
+  return <OperationsPage eyebrow="COORDINATION EXTERNE · 5 DOSSIERS" title="Coordination" description="Centralisez les transmissions vers les partenaires institutionnels." action="Démarrer une coordination"><div className="content-grid"><SectionCard eyebrow="NOUVELLE TRANSMISSION" title="Démarrer une coordination"><form className="operation-form" onSubmit={submit}><label>Dossier concerné<select required defaultValue=""><option value="" disabled>Sélectionner un dossier</option><option>INC-2024-083 · Patrouilleur demandé</option><option>POL-2024-018 · Baie de San Pedro</option><option>SEC-2024-011 · Zone 3</option></select></label><div className="form-two-col"><label>Partenaire<select required defaultValue=""><option value="" disabled>Choisir</option><option>Marine Nationale</option><option>CIAPOL</option><option>Police Maritime</option><option>Sodexam</option></select></label><label>Canal<select required defaultValue=""><option value="" disabled>Choisir</option><option>VHF 16</option><option>Téléphone</option><option>Radio dédiée</option></select></label></div><label>Message de transmission<textarea required rows={5} placeholder="Informations à transmettre au partenaire" /></label><button className="primary-action" type="submit"><Send size={15}/>Lancer la transmission</button>{started && <div className="success-message"><CheckCircle2 size={17}/> Coordination démarrée, accusé de réception attendu.</div>}</form></SectionCard><SectionCard eyebrow="TRANSMISSIONS EN COURS" title="Dossiers partenaires"><DataTable rows={[{title:'Marine Nationale',meta:'INC-2024-083 · Patrouilleur demandé · transmis à 10:24',status:'En attente',tone:'amber'},{title:'CIAPOL',meta:'POL-2024-018 · Baie de San Pedro · transmis à 08:37',status:'Confirmé',tone:'green'},{title:'Police Maritime',meta:'SEC-2024-011 · Zone 3 · transmis à 07:52',status:'En cours',tone:'blue'}]} /></SectionCard></div></OperationsPage>
+}
